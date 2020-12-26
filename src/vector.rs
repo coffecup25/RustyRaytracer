@@ -3,7 +3,7 @@ use std::{
     ops::{Add, Div, Mul, Neg, Sub},
 };
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy,PartialEq,Debug)]
 pub struct Vector3 {
     pub x: f64,
     pub y: f64,
@@ -84,7 +84,7 @@ impl Neg for Vector3 {
 }
 
 impl Div<f64> for Vector3 {
-    type Output = Self;
+    type Output = Vector3;
 
     fn div(self, other: f64) -> Self {
         Self {
@@ -98,8 +98,8 @@ impl Div<f64> for Vector3 {
 impl Sub<Vector3> for Vector3 {
     type Output = Self;
 
-    fn sub(self, other: Self) -> Self::Output {
-        Self {
+    fn sub(self, other: Self) -> Vector3 {
+        Vector3 {
             x: self.x - other.x,
             y: self.y - other.y,
             z: self.z - other.z,
@@ -108,11 +108,11 @@ impl Sub<Vector3> for Vector3 {
 }
 
 impl Vector3 {
-    fn dot(&self, other: Vector3) -> f64 {
+    pub fn dot(&self, other: Vector3) -> f64 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
 
-    fn cross(&self,other: Vector3) -> Vector3{
+    pub fn cross(&self,other: Vector3) -> Vector3{
         Vector3{
             x : self.y*other.z - self.z*other.y,
             y : -(self.x*other.z-self.z*other.x),
@@ -120,7 +120,7 @@ impl Vector3 {
         }
     }
 
-    fn unit_vector(self) -> Vector3 {
+    pub fn unit_vector(self) -> Vector3 {
          self/self.length()
     }
 }
